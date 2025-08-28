@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: spotify-hit-app
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: spotify-hit-app
+  template:
+    metadata:
+      labels:
+        app: spotify-hit-app
+    spec:
+      containers:
+      - name: spotify-hit-app
+        image: spotify-final:latest
+        imagePullPolicy: Never
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+        ports:
+        - containerPort: 5000
+        envFrom:                     
+        - secretRef:
+            name: aws-credentials 
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: spotify-hit-app
+spec:
+  selector:
+    app: spotify-hit-app
+  type: NodePort 
+  ports:
+  - port: 8080
+    targetPort: 5000

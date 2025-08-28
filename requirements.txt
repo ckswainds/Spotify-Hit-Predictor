@@ -1,0 +1,23 @@
+ipykernel
+pandas
+numpy
+matplotlib
+plotly
+seaborn
+pymongo
+from_root
+dill
+certifi
+PyYAML
+boto3
+mypy-boto3-s3
+botocore
+fastapi
+python-multipart
+uvicorn
+jinja2
+imblearn
+-e .
+xgboost
+scikit-learn==1.6.1
+joblib==1.5.1

@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spotify Hit Predictor</title>
+    <!-- Use Tailwind CSS for responsive and modern styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            color: #ffffff;
+            background: linear-gradient(135deg, #1db954, #121212);
+            background-attachment: fixed;
+        }
+        .app-card {
+            background: rgba(255, 255, 255, 0.05); /* Semi-transparent card background */
+            backdrop-filter: blur(10px); /* Frosted glass effect */
+        }
+        .range-slider {
+            -webkit-appearance: none;
+            width: 100%;
+            height: 8px;
+            background: rgba(255, 255, 255, 0.2);
+            outline: none;
+            border-radius: 4px;
+            transition: opacity .2s;
+        }
+        .range-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 20px;
+            height: 20px;
+            background: #1db954; /* Spotify green */
+            cursor: pointer;
+            border-radius: 50%;
+        }
+        .range-slider::-moz-range-thumb {
+            width: 20px;
+            height: 20px;
+            background: #1db954;
+            cursor: pointer;
+            border-radius: 50%;
+        }
+        .loading-dots span {
+            animation: bounce 1.4s infinite ease-in-out both;
+        }
+        .loading-dots span:nth-child(1) { animation-delay: -0.32s; }
+        .loading-dots span:nth-child(2) { animation-delay: -0.16s; }
+        @keyframes bounce {
+            0%, 80%, 100% { transform: scale(0); }
+            40% { transform: scale(1.0); }
+        }
+    </style>
+</head>
+<body class="flex items-center justify-center min-h-screen p-4">
+
+    <!-- Main application card container -->
+    <div class="app-card w-full max-w-2xl mx-auto rounded-xl shadow-lg p-6 sm:p-10 border border-white border-opacity-10">
+
+        <!-- Header section -->
+        <header class="flex flex-col items-center mb-8">
+            <svg class="w-16 h-16 text-[#1db954] mb-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M18 10C18 15.355 13.5 19 8 19V5C13.5 5 18 8.645 18 10Z"></path>
+                <path d="M22 14C22 17.5 19 21 12 21V3C19 3 22 6.5 22 14Z"></path>
+                <path d="M12 11a4 4 0 014 4"></path>
+            </svg>
+            <h1 class="text-3xl sm:text-4xl font-bold mb-2">Hit Predictor</h1>
+            <p class="text-white text-opacity-70 text-center">Predict if your song has what it takes to climb the charts.</p>
+        </header>
+
+        <!-- Use a form to submit data to the FastAPI backend -->
+        <form id="prediction-form" action="/predict" method="post">
+            <!-- Sliders for different track features -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-8 mb-8">
+                <div>
+                    <label for="danceability" class="block text-sm font-medium mb-2">Danceability <span id="danceability-value" class="text-gray-400">50</span></label>
+                    <input type="range" id="danceability" name="danceability" min="0" max="100" value="50" class="range-slider">
+                </div>
+                <div>
+                    <label for="energy" class="block text-sm font-medium mb-2">Energy <span id="energy-value" class="text-gray-400">75</span></label>
+                    <input type="range" id="energy" name="energy" min="0" max="100" value="75" class="range-slider">
+                </div>
+                <div>
+                    <label for="key" class="block text-sm font-medium mb-2">Key <span id="key-value" class="text-gray-400">0</span></label>
+                    <input type="range" id="key" name="key" min="0" max="11" value="0" class="range-slider">
+                </div>
+                <div>
+                    <label for="loudness" class="block text-sm font-medium mb-2">Loudness <span id="loudness-value" class="text-gray-400">85</span></label>
+                    <input type="range" id="loudness" name="loudness" min="0" max="100" value="85" class="range-slider">
+                </div>
+                <div>
+                    <label for="mode" class="block text-sm font-medium mb-2">Mode <span id="mode-value" class="text-gray-400">0</span></label>
+                    <input type="range" id="mode" name="mode" min="0" max="1" value="0" class="range-slider">
+                </div>
+                <div>
+                    <label for="speechiness" class="block text-sm font-medium mb-2">Speechiness <span id="speechiness-value" class="text-gray-400">10</span></label>
+                    <input type="range" id="speechiness" name="speechiness" min="0" max="100" value="10" class="range-slider">
+                </div>
+                <div>
+                    <label for="acousticness" class="block text-sm font-medium mb-2">Acousticness <span id="acousticness-value" class="text-gray-400">25</span></label>
+                    <input type="range" id="acousticness" name="acousticness" min="0" max="100" value="25" class="range-slider">
+                </div>
+                <div>
+                    <label for="instrumentalness" class="block text-sm font-medium mb-2">Instrumentalness <span id="instrumentalness-value" class="text-gray-400">10</span></label>
+                    <input type="range" id="instrumentalness" name="instrumentalness" min="0" max="100" value="10" class="range-slider">
+                </div>
+                <div>
+                    <label for="liveness" class="block text-sm font-medium mb-2">Liveness <span id="liveness-value" class="text-gray-400">30</span></label>
+                    <input type="range" id="liveness" name="liveness" min="0" max="100" value="30" class="range-slider">
+                </div>
+                <div>
+                    <label for="valence" class="block text-sm font-medium mb-2">Valence (Positivity) <span id="valence-value" class="text-gray-400">60</span></label>
+                    <input type="range" id="valence" name="valence" min="0" max="100" value="60" class="range-slider">
+                </div>
+                <div>
+                    <label for="tempo" class="block text-sm font-medium mb-2">Tempo <span id="tempo-value" class="text-gray-400">120</span></label>
+                    <input type="range" id="tempo" name="tempo" min="0" max="200" value="120" class="range-slider">
+                </div>
+                <div>
+                    <label for="duration_ms" class="block text-sm font-medium mb-2">Duration (ms) <span id="duration_ms-value" class="text-gray-400">240000</span></label>
+                    <input type="range" id="duration_ms" name="duration_ms" min="0" max="600000" value="240000" class="range-slider">
+                </div>
+                <div>
+                    <label for="time_signature" class="block text-sm font-medium mb-2">Time Signature <span id="time_signature-value" class="text-gray-400">4</span></label>
+                    <input type="range" id="time_signature" name="time_signature" min="1" max="5" value="4" class="range-slider">
+                </div>
+                <div>
+                    <label for="chorus_hit" class="block text-sm font-medium mb-2">Chorus Hit <span id="chorus_hit-value" class="text-gray-400">50</span></label>
+                    <input type="range" id="chorus_hit" name="chorus_hit" min="0" max="100" value="50" class="range-slider">
+                </div>
+                <div>
+                    <label for="sections" class="block text-sm font-medium mb-2">Sections <span id="sections-value" class="text-gray-400">5</span></label>
+                    <input type="range" id="sections" name="sections" min="1" max="20" value="5" class="range-slider">
+                </div>
+            </div>
+
+            <!-- Prediction button -->
+            <div class="text-center">
+                <button type="submit" class="w-full bg-[#1db954] text-black font-bold py-3 rounded-full hover:bg-[#1ed760] transition-colors duration-200">
+                    Predict Hit Potential
+                </button>
+            </div>
+        </form>
+
+        <!-- Loading state and prediction result section (initially hidden) -->
+        <!-- Jinja2 template conditional rendering for prediction result -->
+        {% if result %}
+        <div id="result-section" class="text-center mt-8">
+            <div id="prediction-result">
+                <h3 class="text-xl font-bold text-white mb-2">Prediction Result</h3>
+                <p id="result-message" class="text-white text-3xl font-semibold mb-4">
+                    {{ result }}
+                </p>
+                <a href="/" class="mt-6 bg-white bg-opacity-10 text-white font-semibold py-2 px-6 rounded-full hover:bg-opacity-20 transition-colors duration-200">
+                    Try another song
+                </a>
+            </div>
+        </div>
+        {% endif %}
+
+    </div>
+    
+    <script>
+        // Get all range input elements and their corresponding value displays
+        const sliders = document.querySelectorAll('input[type="range"]');
+        
+        // Loop through each slider to add an event listener
+        sliders.forEach(slider => {
+            const valueSpan = document.getElementById(slider.id + '-value');
+            
+            // Update the span's text content whenever the slider value changes
+            slider.addEventListener('input', (event) => {
+                valueSpan.textContent = event.target.value;
+            });
+        });
+    </script>
+</body>
+</html>
