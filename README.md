@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 # Spotify Hit Predictor: An MLOps Project 🎶
 
 This project applies **Machine Learning Operations (MLOps)** principles to predict whether a song will be a hit or a flop on Spotify based on its audio features. By building an end-to-end MLOps pipeline, I ensured that the model is **robust, scalable, and production-ready**.
@@ -168,7 +168,4 @@ This project goes beyond a standalone machine learning model—it's designed as 
 
 ---
 
-## 🤝 Contribution
 
-=======
->>>>>>> 4f068a5 (DONE)
