@@ -129,7 +129,7 @@ This project goes beyond a standalone machine learning model—it's designed as 
 1. **Clone the Repository**:
 
    ```bash
-   git clone https://github.com/ckswainds/Spotify_tracks_classification.git
+   https://github.com/ckswainds/Spotify-Hit-Predictor.git
    cd spotify-hit-predictor
    ```
 
