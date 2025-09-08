@@ -7,7 +7,7 @@ import mlflow.sklearn
 
 from sklearn.ensemble import RandomForestClassifier
 from xgboost import XGBClassifier
-from sklearn.metrics import accuracy_score, precision_score, recall_score, roc_auc_score
+from sklearn.metrics import accuracy_score, precision_score, recall_score
 
 from src.exception import MyException
 from src.logger import logging
@@ -83,13 +83,13 @@ class ModelTrainer:
                 accuracy = accuracy_score(self.y_test, y_preds)
                 precision = precision_score(self.y_test, y_preds)
                 recall = recall_score(self.y_test, y_preds)
-                roc_auc = roc_auc_score(self.y_test, y_preds)
+             
 
                 # Log metrics
                 mlflow.log_metric("accuracy", accuracy)
                 mlflow.log_metric("precision", precision)
                 mlflow.log_metric("recall", recall)
-                mlflow.log_metric("roc_auc", roc_auc)
+                
 
                 # Save trial model
                 mlflow.sklearn.log_model(model, f"trial_{trial.number}_model")
@@ -153,7 +153,7 @@ class ModelTrainer:
                 accuracy_score=accuracy_score(self.y_test, y_preds),
                 recall_score=recall_score(self.y_test, y_preds),
                 precision_score=precision_score(self.y_test, y_preds),
-                roc_auc_score=roc_auc_score(self.y_test, y_preds)
+            
             )
 
             # Save report JSON
@@ -162,7 +162,7 @@ class ModelTrainer:
                 "accuracy_score": metric_artifact.accuracy_score,
                 "recall_score": metric_artifact.recall_score,
                 "precision_score": metric_artifact.precision_score,
-                "roc_auc_score": metric_artifact.roc_auc_score
+              
             }
 
             report_dir = os.path.dirname(self.model_trainer_config.trained_model_report_file_path)
