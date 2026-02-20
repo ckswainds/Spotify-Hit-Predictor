@@ -7,10 +7,11 @@ import logging
 from src.exception import MyException
 from src.logger import logging
 from src.constants import *
+from dotenv import load_dotenv
 
 # Get the path to the CA certificate file for TLS/SSL connections
+load_dotenv()
 ca = certifi.where()
-
 class MongoDBClient:
     """
     A class to establish a singleton connection to a MongoDB database.

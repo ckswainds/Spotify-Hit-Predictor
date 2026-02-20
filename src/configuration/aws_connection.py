@@ -4,7 +4,8 @@ from src.constants import AWS_SECRET_ACCESS_KEY_ENV_KEY,AWS_ACCESS_KEY_ID_ENV_KE
 from src.logger import logging
 from src.exception import MyException
 import sys
-
+from dotenv import load_dotenv
+load_dotenv()
 class S3Client:
     """
     S3Client class to manage the connection to Amazon S3.

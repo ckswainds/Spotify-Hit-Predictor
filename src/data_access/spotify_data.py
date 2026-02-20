@@ -7,7 +7,7 @@ from typing import Optional
 from src.configuration.mongo_db_connection import MongoDBClient
 from src.constants import DATABASE_NAME,COLLECTION_NAME
 from src.exception import MyException
-from src.logger import logging # Assuming you have a logger module configured
+from src.logger import logging 
 
 class SpotifyData:
     """

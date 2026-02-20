@@ -28,7 +28,6 @@ class ClassificationMetricArtifact:
     accuracy_score:float
     precision_score:float
     recall_score:float
-    roc_auc_score:float
 @dataclass
 class ModelTrainerArtifact:
     trained_model_path:str
