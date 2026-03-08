@@ -32,7 +32,7 @@ class ModelTrainer:
             self.model_trainer_config = model_trainer_config
             self.data_transformation_artifact = data_tranformation_artifact
             self.preprocessor_object_file_path = self.data_transformation_artifact.preprocessor_object_file_path
-
+            
             logging.info("Loading transformed training and testing data.")
             train = np.load(self.data_transformation_artifact.transformed_train_file_path)
             test = np.load(self.data_transformation_artifact.transformed_test_file_path)
@@ -142,10 +142,14 @@ class ModelTrainer:
                 )
 
             best_model.fit(self.X_train, self.y_train)
+            # importances=best_model.feature_importances_
+            # feature_names=self.X_train.columns
             y_preds = best_model.predict(self.X_test)
 
             # Preprocessor
             preprocessor = joblib.load(self.preprocessor_object_file_path)
+            # print("")
+            # print(preprocessor.get_feature_names_out())
             final_model = MyModel(preprocessing_object=preprocessor, trained_model_object=best_model)
 
             # Metrics
@@ -186,6 +190,7 @@ class ModelTrainer:
 
             # Get final model + metrics
             mymodel, metric_artifact = self.get_model_object_and_report()
+            
 
             # Save final model
             model_dir = os.path.dirname(self.model_trainer_config.trained_model_file_path)
