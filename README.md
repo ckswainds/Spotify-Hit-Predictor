@@ -1,43 +1,68 @@
 
-# Spotify Hit Predictor: An MLOps Project 🎶
+# Spotify Hit Predictor: Production-Grade MLOps Pipeline
 
-This project applies **Machine Learning Operations (MLOps)** principles to predict whether a song will be a hit or a flop on Spotify based on its audio features. By building an end-to-end MLOps pipeline, I ensured that the model is **robust, scalable, and production-ready**.
+[![Python 3.8+](https://img.shields.io/badge/Python-3.8%2B-blue)](https://www.python.org/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
+[![Docker](https://img.shields.io/badge/Docker-Containerized-brightblue)](Dockerfile)
+[![AWS](https://img.shields.io/badge/Cloud-AWS-orange)](https://aws.amazon.com/)
+
+## Executive Summary
+
+A **production-grade MLOps pipeline** that predicts Spotify hit songs with automated model deployment, experiment tracking, and hyperparameter optimization. This end-to-end project demonstrates enterprise-level ML engineering practices including modular architecture, CI/CD automation, and cloud infrastructure management.
+
+**Key Highlights:**
+- ✅ **Automated ML Pipeline**: Data ingestion → validation → transformation → model training → deployment
+- ✅ **Experiment Tracking**: MLflow integration for reproducible, comparable models
+- ✅ **Hyperparameter Optimization**: Optuna-powered automated tuning for optimal performance
+- ✅ **Production Deployment**: Docker containerization with AWS infrastructure (ECR, S3, EC2)
+- ✅ **REST API**: FastAPI-powered real-time prediction endpoint
+- ✅ **CI/CD Automation**: GitHub Actions for automated testing and deployment
 
 ---
 
-## 🎯 Project Overview
+## Project Vision
 
-The goal of this project was to build a machine learning model that can classify a song as either a **"hit"** or a **"flop"** by analyzing audio features such as loudness, liveness, danceability, and more.
-
-I structured the entire project using **Object-Oriented Programming (OOP)** principles to maintain **modularity, reusability, and clarity**.
+This project demonstrates the complete ML lifecycle beyond model development—building a **scalable, maintainable, and deployable machine learning system**. The application predicts whether a song will be a hit or flop on Spotify by analyzing audio features (loudness, danceability, energy, etc.), with a focus on production-ready code and enterprise patterns.
 
 ---
 
-## ✨ MLOps Pipeline & Key Features
+## Technical Architecture
 
-This project goes beyond a standalone machine learning model—it's designed as a **complete MLOps solution** for real-world deployment.
+### Pipeline Components
 
-* **Data Handling & Processing**:
-  I implemented modules for **data ingestion, validation, and transformation** to guarantee clean, reliable inputs for model training.
+#### 1. **Data Layer**
+- **Data Ingestion**: Automated data collection and import from multiple sources
+- **Data Validation**: Schema validation and quality checks to ensure data integrity
+- **Data Transformation**: Feature engineering, normalization, and preprocessing for model consumption
 
-* **Model Training & Optimization**:
+#### 2. **ML Training & Optimization**
+- **Model Training**: Scikit-learn and XGBoost implementations with cross-validation
+- **Hyperparameter Tuning**: Optuna framework for automated, intelligent parameter optimization
+- **Experiment Tracking**: MLflow integration for logging metrics, parameters, and model artifacts across training runs
+- **Model Evaluation**: Comprehensive validation using multiple metrics and performance benchmarks
 
-  * **MLflow**: Used for **experiment tracking** to log and compare parameters, metrics, and artifacts.
-  * **Optuna**: Integrated for **hyperparameter tuning**, automatically searching for the best configurations.
+#### 3. **Model Persistence & Serving**
+- **Model Registry**: Automated versioning and management of trained models
+- **Cloud Storage**: AWS S3 for scalable, persistent model artifact storage
+- **REST API**: FastAPI endpoints for real-time predictions with JSON request/response handling
 
-* **CI/CD (Continuous Integration/Continuous Deployment)**:
+#### 4. **Infrastructure & Deployment**
+- **Containerization**: Docker for consistent, reproducible environments across development, testing, and production
+- **Container Registry**: AWS ECR for centralized Docker image hosting
+- **Cloud Compute**: AWS EC2 for scalable, on-demand application hosting
+- **CI/CD Pipeline**: GitHub Actions for automated workflows:
+  - ✓ Code testing on push
+  - ✓ Docker image building
+  - ✓ ECR image push
+  - ✓ EC2 deployment automation
 
-  * **GitHub Actions** automates the pipeline so that any code push triggers testing, building, and deployment steps.
+### Code Quality & Architecture
 
-* **Cloud Infrastructure**:
-
-  * **AWS S3**: Stores the trained models.
-  * **AWS ECR**: Hosts Docker images of the application.
-  * **AWS EC2**: Serves the application in a scalable cloud environment.
-
-* **API Service**:
-
-  * **FastAPI** powers a REST API that allows real-time predictions. Song features can be sent as JSON requests, and the API responds with predictions.
+- **Object-Oriented Design**: Modular, reusable components following SOLID principles
+- **Configuration Management**: YAML-based configuration for reproducible training runs
+- **Exception Handling**: Custom exception hierarchy for robust error management
+- **Logging**: Structured logging throughout the pipeline for debugging and monitoring
+- **Utils & Helpers**: Centralized utility functions for common operations
 
 ---
 
@@ -98,74 +123,229 @@ This project goes beyond a standalone machine learning model—it's designed as 
 
 ---
 
-## 🛠️ Technologies Used
+## Tech Stack
 
-* **Python**: Core programming language.
-* **Scikit-learn, XGBoost**: Machine learning libraries.
-* **MLflow**: For tracking experiments.
-* **Optuna**: Hyperparameter optimization.
-* **FastAPI**: Web framework for serving the model.
-* **Docker**: Containerization.
-* **GitHub Actions**: CI/CD automation.
-* **AWS**:
-
-  * **S3**: Model storage.
-  * **ECR**: Docker image registry.
-  * **EC2**: Cloud deployment.
+| Category | Technologies |
+|----------|---------------|
+| **Language** | Python 3.8+ |
+| **ML Frameworks** | Scikit-learn, XGBoost |
+| **Experiment Tracking** | MLflow |
+| **Hyperparameter Optimization** | Optuna |
+| **Web Framework** | FastAPI |
+| **Containerization** | Docker |
+| **Cloud Services** | AWS (S3, ECR, EC2) |
+| **CI/CD** | GitHub Actions |
+| **Database** | MongoDB |
 
 ---
 
-## ⚙️ How to Run the Project
+## Quick Start
 
 ### Prerequisites
 
-* Python 3.8+
-* Docker
-* AWS account with configured credentials
-* GitHub account
+| Requirement | Version |
+|-------------|---------|
+| Python | 3.8+ |
+| Docker | Latest |
+| AWS CLI | Configured with credentials |
+| Git | Latest |
 
-### Steps
+### Installation & Setup
 
-1. **Clone the Repository**:
+#### Step 1: Clone the Repository
 
-   ```bash
-   https://github.com/ckswainds/Spotify-Hit-Predictor.git
-   cd spotify-hit-predictor
-   ```
+```bash
+git clone https://github.com/ckswainds/Spotify-Hit-Predictor.git
+cd Spotify-Hit-Predictor
+```
 
-2. **Set up AWS Environment**:
+#### Step 2: Create Virtual Environment (Recommended)
 
-   * Create an S3 bucket for storing models.
-   * Create an ECR repository for Docker images.
-   * Configure AWS credentials.
+```bash
+python -m venv venv
+# On Windows
+venv\Scripts\activate
+# On macOS/Linux
+source venv/bin/activate
+```
 
-3. **Local Setup**:
+#### Step 3: Install Dependencies
 
-   * Install dependencies:
+```bash
+pip install -r requirements.txt
+```
 
-     ```bash
-     pip install -r requirements.txt
-     ```
-   * Run the training pipeline:
+#### Step 4: Configure AWS Credentials
 
-     ```bash
-     python main.py
-     ```
+```bash
+aws configure
+# Enter your AWS Access Key ID and Secret Access Key
+```
 
-4. **Deployment (via CI/CD)**:
+Create S3 bucket and ECR repository:
+- S3 Bucket: For model artifact storage
+- ECR Repository: For Docker image hosting
 
-   * GitHub Actions will automatically:
+#### Step 5: Run Training Pipeline
 
-     1. Build the Docker image.
-     2. Push it to AWS ECR.
-     3. Deploy it on AWS EC2.
+```bash
+python main.py
+```
 
-5. **Access the API**:
+This command executes the complete pipeline:
+1. Data ingestion from source
+2. Data validation and quality checks
+3. Feature transformation and preprocessing
+4. Model training with hyperparameter optimization
+5. Model evaluation and metrics logging
+6. Model artifact storage in S3
 
-   * The FastAPI service runs at:
-     `http://<EC2_PUBLIC_IP>:8000/predict`
-   * Send a `POST` request with song features (JSON) to receive predictions.
+### Local Testing
+
+Test the prediction API locally:
+
+```bash
+python app.py
+# API runs at http://localhost:8000
+```
+
+**Make a prediction request:**
+```bash
+curl -X POST "http://localhost:8000/predict" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "features": [0.5, 0.7, 0.8, 0.6, ...]
+  }'
+```
+
+### Docker Deployment
+
+Build and run locally:
+
+```bash
+docker build -t spotify-predictor .
+docker run -p 8000:8000 spotify-predictor
+```
+
+### Production Deployment (AWS)
+
+The CI/CD pipeline automates deployment:
+
+1. **Trigger**: Push code to main branch
+2. **Build**: GitHub Actions builds Docker image
+3. **Push**: Image pushed to AWS ECR
+4. **Deploy**: Automatically deployed to AWS EC2
+5. **Access**: API available at `http://<EC2_PUBLIC_IP>:8000`
+
+Configure CI/CD in `.github/workflows/ci_cd.yaml`
 
 ---
 
- **Thank you for your time**
+## Key Learnings & Skills Demonstrated
+
+### MLOps & DevOps
+- End-to-end ML pipeline design and implementation
+- Experiment tracking and reproducibility (MLflow)
+- Automated model tuning and optimization (Optuna)
+- Containerization and orchestration (Docker)
+- CI/CD pipeline automation (GitHub Actions)
+
+### Cloud & Infrastructure
+- AWS cloud services (S3, ECR, EC2)
+- Infrastructure as Code principles
+- Scalable deployment strategies
+- Model versioning and registry management
+
+### Software Engineering
+- Object-oriented design patterns
+- Modular, maintainable code architecture
+- Configuration management best practices
+- Exception handling and logging
+- API design and RESTful principles
+
+### Data & ML
+- End-to-end feature engineering
+- Model evaluation and validation
+- Hyperparameter optimization strategies
+- Cross-validation and performance metrics
+
+---
+
+## Project Structure
+
+```
+spotify-hit-predictor/
+├── src/
+│   ├── components/
+│   │   ├── data_ingestion.py          # Data collection & import
+│   │   ├── data_validation.py         # Schema & quality validation
+│   │   ├── data_transformation.py     # Feature engineering
+│   │   ├── model_trainer.py           # Model training & tuning
+│   │   ├── model_evaluation.py        # Performance evaluation
+│   │   └── model_pusher.py            # Model registry & S3 upload
+│   ├── configuration/
+│   │   ├── aws_connection.py          # AWS client setup
+│   │   └── mongo_db_connection.py     # Database connection
+│   ├── pipeline/
+│   │   ├── training_pipeline.py       # Orchestrates training flow
+│   │   └── prediction_pipeline.py     # Orchestrates inference flow
+│   ├── entity/                        # Data models & entities
+│   ├── exception/                     # Custom exception classes
+│   ├── logger/                        # Logging utilities
+│   ├── data_access/                   # Database access layer
+│   ├── cloud_storage/                 # AWS integrations
+│   └── utils/                         # Helper functions
+├── notebooks/
+│   ├── spotify.ipynb                  # Exploratory analysis
+│   └── data/                          # Notebook datasets
+├── .github/
+│   └── workflows/
+│       └── ci_cd.yaml                 # GitHub Actions automation
+├── config/
+│   ├── schema.yaml                    # Data validation schema
+│   └── model.yaml                     # Model configuration
+├── artifacts/                         # Pipeline outputs (timestamped)
+├── app.py                            # FastAPI application
+├── main.py                           # Pipeline entry point
+├── Dockerfile                        # Container definition
+├── requirements.txt                  # Python dependencies
+└── README.md                         # This file
+```
+
+---
+
+## Monitoring & Observability
+
+- **MLflow Dashboard**: Track experiments, metrics, and model performance across runs
+- **Logging**: Structured logs at each pipeline stage for debugging and monitoring
+- **Error Tracking**: Custom exceptions with detailed error context
+- **Model Artifacts**: Versioned models stored in S3 with metadata tracking
+
+---
+
+## Future Enhancements
+
+- [ ] Model performance monitoring and alerting
+- [ ] A/B testing capability for model comparisons
+- [ ] Real-time data drift detection
+- [ ] Advanced feature engineering with feature store
+- [ ] Multi-model ensemble strategies
+- [ ] API rate limiting and authentication
+
+---
+
+## License
+
+This project is licensed under the MIT License. See [LICENSE](LICENSE) file for details.
+
+---
+
+## Contact & Questions
+
+For questions about the project architecture, implementation, or deployment strategy, feel free to reach out.
+
+**Repository**: [GitHub - Spotify Hit Predictor](https://github.com/ckswainds/Spotify-Hit-Predictor)
+
+---
+
+*Built with ❤️ by [Your Name] | Last Updated: March 2026*
