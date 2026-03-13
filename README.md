@@ -348,4 +348,4 @@ For questions about the project architecture, implementation, or deployment stra
 
 ---
 
-*Built with ❤️ by [Your Name] | Last Updated: March 2026*
+*Built with ❤️ by [Chandan Kumar Swain] | Last Updated: March 2026*
