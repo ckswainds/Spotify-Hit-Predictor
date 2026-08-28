@@ -91,7 +91,7 @@ class ModelEvaluation:
                 logging.info("No existing production model to compare against.")
 
             tmp_best_score = 0 if best_model_score is None else best_model_score
-            is_model_accepted = trained_model_score > tmp_best_score
+            is_model_accepted = trained_model_score > tmp_best_score + 0.02
             score_difference = trained_model_score - tmp_best_score
             
             logging.info(f"Trained model accuracy: {trained_model_score}")

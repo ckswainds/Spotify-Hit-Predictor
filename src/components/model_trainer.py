@@ -8,6 +8,7 @@ import mlflow.sklearn
 from sklearn.ensemble import RandomForestClassifier
 from xgboost import XGBClassifier
 from sklearn.metrics import accuracy_score, precision_score, recall_score
+from sklearn.model_selection import StratifiedKFold, cross_val_score
 
 from src.exception import MyException
 from src.logger import logging
@@ -76,25 +77,19 @@ class ModelTrainer:
                 mlflow.log_param("classifier", classifier_name)
                 mlflow.log_params(trial.params)
 
-                model.fit(self.X_train, self.y_train)
-                y_preds = model.predict(self.X_test)
-
-                # Evaluate
-                accuracy = accuracy_score(self.y_test, y_preds)
-                precision = precision_score(self.y_test, y_preds)
-                recall = recall_score(self.y_test, y_preds)
-             
+                # Use StratifiedKFold CV on train data only — test set stays untouched
+                cv = StratifiedKFold(n_splits=5, shuffle=True, random_state=42)
+                cv_scores = cross_val_score(model, self.X_train, self.y_train, cv=cv, scoring="accuracy")
+                accuracy = cv_scores.mean()
 
                 # Log metrics
-                mlflow.log_metric("accuracy", accuracy)
-                mlflow.log_metric("precision", precision)
-                mlflow.log_metric("recall", recall)
-                
+                mlflow.log_metric("cv_accuracy_mean", accuracy)
+                mlflow.log_metric("cv_accuracy_std", cv_scores.std())
 
                 # Save trial model
                 mlflow.sklearn.log_model(model, f"trial_{trial.number}_model")
 
-            logging.info(f"Trial {trial.number} completed with accuracy: {accuracy}")
+            logging.info(f"Trial {trial.number} completed with CV accuracy: {accuracy:.4f} (+/- {cv_scores.std():.4f})")
             return accuracy
 
         except Exception as e:
